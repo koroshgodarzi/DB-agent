@@ -1,0 +1,59 @@
+{
+    "tables": [
+      {
+        "name": "products",
+        "description": "Catalog of items available for sale. Contains static product details.",
+        "columns": [
+          {"name": "id", "type": "INTEGER", "description": "Primary Key"},
+          {"name": "name", "type": "VARCHAR", "description": "Name of the product"},
+          {"name": "category", "type": "VARCHAR", "description": "Product category (e.g., Electronics, Food)"},
+          {"name": "description", "type": "TEXT", "description": "Long form product description"}
+        ]
+      },
+      {
+        "name": "suppliers",
+        "description": "List of external companies that provide/sell products to us.",
+        "columns": [
+          {"name": "id", "type": "INTEGER", "description": "Primary Key"},
+          {"name": "name", "type": "VARCHAR", "description": "Supplier company name"},
+          {"name": "city", "type": "VARCHAR", "description": "Location city"},
+          {"name": "address", "type": "VARCHAR", "description": "Full address"}
+        ]
+      },
+      {
+        "name": "purchases",
+        "description": "Records of inventory bought from suppliers. Represents OUTGOING money (Costs).",
+        "columns": [
+          {"name": "id", "type": "INTEGER", "description": "Primary Key"},
+          {"name": "product_id", "type": "INTEGER", "description": "Foreign Key -> products.id"},
+          {"name": "supplier_id", "type": "INTEGER", "description": "Foreign Key -> suppliers.id"},
+          {"name": "purchase_date", "type": "DATE", "description": "Date of purchase"},
+          {"name": "quantity", "type": "INTEGER", "description": "Number of units bought"},
+          {"name": "unit_cost", "type": "FLOAT", "description": "The cost we paid per single unit"}
+        ],
+        "relationships": [
+          "purchases.product_id refers to products.id",
+          "purchases.supplier_id refers to suppliers.id"
+        ]
+      },
+      {
+        "name": "sales",
+        "description": "Records of items sold to customers. Represents INCOMING money (Revenue).",
+        "columns": [
+          {"name": "id", "type": "INTEGER", "description": "Primary Key"},
+          {"name": "product_id", "type": "INTEGER", "description": "Foreign Key -> products.id"},
+          {"name": "sale_date", "type": "DATE", "description": "Date of sale"},
+          {"name": "quantity", "type": "INTEGER", "description": "Number of units sold"},
+          {"name": "unit_price", "type": "FLOAT", "description": "The price the customer paid per single unit"}
+        ],
+        "relationships": [
+          "sales.product_id refers to products.id"
+        ]
+      }
+    ],
+    "business_logic": {
+      "total_revenue_formula": "SUM(sales.quantity * sales.unit_price)",
+      "total_cost_formula": "SUM(purchases.quantity * purchases.unit_cost)",
+      "gross_profit_formula": "Total Revenue - Total Cost (requires joining sales and purchases usually via product_id and aggregation)"
+    }
+  }
