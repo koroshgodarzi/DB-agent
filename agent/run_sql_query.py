@@ -3,7 +3,7 @@ from typing import Optional, List, Dict, Any
 from dotenv import load_dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from generate_sql_query import generate_sql_query
+from .generate_sql_query import generate_sql_query
 
 # Load environment variables from .env file
 load_dotenv()

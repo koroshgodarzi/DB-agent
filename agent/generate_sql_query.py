@@ -60,7 +60,7 @@ def generate_sql_query(
         3. Pay close attention to the 'relationships' and 'business_logic' in the schema.
         4. For profit calculations, use the formula: (Sales Revenue - Purchase Cost).
 
-        Here's user's: 
+        Here's user's question: 
         {user_input}
         """
         

@@ -9,6 +9,7 @@ dependencies = [
     "fastapi>=0.121.2",
     "langchain>=0.1.0",
     "langchain-ollama>=0.1.0",
+    "langgraph>=0.0.26",
     "psycopg2>=2.9.11",
     "sqlalchemy>=2.0.44",
     "uvicorn>=0.38.0",
