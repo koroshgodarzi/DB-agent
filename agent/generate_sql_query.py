@@ -2,7 +2,11 @@ import json
 from pathlib import Path
 from typing import Optional
 from langchain_ollama.llms import OllamaLLM
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
 def load_schema(schema_path: str = None) -> dict:
     """
@@ -26,7 +30,7 @@ def load_schema(schema_path: str = None) -> dict:
 def generate_sql_query(
     user_input: str,
     schema_path: str = None,
-    ollama_url: str = "http://localhost:11434",
+    ollama_url: str = OLLAMA_URL,
     model: str = "mannix/defog-llama3-sqlcoder-8b"
 ) -> Optional[str]:
     """
@@ -68,7 +72,8 @@ def generate_sql_query(
         llm = OllamaLLM(
             base_url=ollama_url,
             model=model,
-            timeout=120
+            timeout=300,
+            num_ctx=2048 
         )
         
         sql_query = llm.invoke(prompt)

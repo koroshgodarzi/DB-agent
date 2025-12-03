@@ -24,6 +24,19 @@ services:
     volumes:
       - ollama_data:/root/.ollama
 
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - fastapi_data:/app
+    depends_on:
+      - postgres
 volumes:
   qdrant_data:
   ollama_data:
+  fastapi_data:
